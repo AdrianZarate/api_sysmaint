@@ -9,9 +9,9 @@ class ClientDevice extends Model
 {
     use HasFactory;
 
-    public function customer()
+    public function client()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Client::class);
     }
 
     public function device()

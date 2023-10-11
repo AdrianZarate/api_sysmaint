@@ -10,7 +10,7 @@ class Device extends Model
     use HasFactory;
 
     //* Relacion muchos a muchos
-    public function customers()
+    public function clients()
     {
         return $this->belongsToMany('App/Models/Client');
     }
