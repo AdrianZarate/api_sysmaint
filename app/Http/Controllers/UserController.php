@@ -76,7 +76,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'phone' => $request->phone,
-            'rol_id' => 2,
+            'rol_id' => 3,
         ]);
 
 
