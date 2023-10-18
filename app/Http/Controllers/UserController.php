@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * *trae todos los usuarios
      */
     public function index()
     {
@@ -22,25 +23,28 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
+     * *crea un usuario
      */
     public function store(LoginRequest $request)
     {
+        // Todo para pruebas
         // return response()->json([
         //     'luffy' => true,
-        //     'request1' => $request->all('first_name'),
-        //     'request2' => $request,
+        //     'request1' => $request->first_name,
+        //     'request2' => $request->all(),
         // ]);
-        
-        $user = User::create($request->all());
+
+        // $user = User::create($request->all());
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone' => $request->phone,
+            'rol_id' => 2,
+        ]);
+
 
         $client = new Client();
         $client->user_id = $user->id;
@@ -62,30 +66,40 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return response()->json([
+            'status' => true,
+            'user' => $user->find($user->id)
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      */
+    //Todo falta implementar
     public function update(Request $request, User $user)
     {
-        //
+        return response()->json([
+            'status' => "actualizado",
+            'datos' => $request->all(),
+            'user' => $user->find($user->id)
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
+    //Todo falta implementar
     public function destroy(User $user)
     {
-        //
+        //ejemplo
+        $borrar = $user->find($user->id);
+
+        $borrar->delete();
+
+        return response()->json([
+            'Borrar' => $borrar,
+            'message' => "Rol eliminado"
+        ], 200);
     }
 }

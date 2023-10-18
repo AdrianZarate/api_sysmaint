@@ -50,7 +50,7 @@ class RolController extends Controller
         return response()->json([
             'status' => true,
             'rol' => $rol->find($rol->id)
-        ]);
+        ], 200);
     }
     
     //Todo falta implementar
