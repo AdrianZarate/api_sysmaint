@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TechnicianController;
 use App\Http\Controllers\UserController;
@@ -28,6 +29,7 @@ Route::apiResource('rol', RolController::class);
 Route::apiResource('user', UserController::class);
 Route::apiResource('client', ClientController::class);
 Route::apiResource('technician', TechnicianController::class);
+Route::apiResource('device', DeviceController::class);
 
 
 
