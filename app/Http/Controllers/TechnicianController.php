@@ -12,54 +12,68 @@ class TechnicianController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        //* with es para traer datos relacionados
+        $technician = Technician::with('user')->get();
+        // Todo otra manera de hacerlo
+        // $user = User::where('rol_id', 2)->get(); 
+        // $clientes = Cliente::with('user')->select('clientes.nombre', 'clientes.apellido', 'users.name')->get();
+        return response()->json([
+            'status' => true,
+            'Technician' => $technician,
+            // 'user' => $user
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Technician $technician)
+    public function show($user_id)
     {
-        //
-    }
+        $technician = Technician::with('user')->where('user_id', $user_id)->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Technician $technician)
-    {
-        //
+        if ($technician) {
+            return response()->json([
+                'status' => true,
+                'technician' => $technician,
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Tecnico no encontrado',
+            ], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Technician $technician)
+    //Todo falta implementar al actualizar el technician que se actualize el user
+
+    public function update(Request $request, $user_id)
     {
-        //
+        return response()->json([
+            'status' => "actualizado",
+            'request' => $request->all(),
+            'technician' => $user_id
+            // 'client' => $user_id->find($user_id)
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Technician $technician)
+    //Todo aun no elimina
+    public function destroy($user_id)
     {
-        //
+        //ejemplo
+        $technician = Technician::with('user')->where('user_id', $user_id)->first();
+        $borrar = $technician;
+
+        // $borrar->delete();
+
+        return response()->json([
+            'Borrar' => $borrar,
+            'message' => "technician eliminado"
+        ], 200);
     }
 }

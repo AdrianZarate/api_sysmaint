@@ -7,8 +7,42 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class UserController extends Controller
 {
+
+    //!completar esto. Puedo crear otro controlador solo para el login
+    public function login(LoginRequest $request)
+    {
+        return response()->json([
+                'luffy' => true,
+                // 'request1' => $request,
+                // 'request2' => $request->all(),
+            ]);
+        // $credentials = $request->only('email', 'password');
+
+        // if (Auth::attempt($credentials)) {
+        //     // Las credenciales son válidas
+        //     $user = Auth::user(); // Obtén el usuario autenticado
+
+        //     // Puedes realizar acciones adicionales aquí, como generar un token de acceso si es necesario.
+
+        //     return response()->json([
+        //         'status' => true,
+        //         'message' => "Inicio de sesión exitoso",
+        //         'user' => $user,
+        //     ], 200);
+        // } else {
+        //     // Las credenciales no son válidas
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => "Credenciales incorrectas",
+        //     ], 401);
+        // }
+    }
+
     /**
      * Display a listing of the resource.
      * *trae todos los usuarios
