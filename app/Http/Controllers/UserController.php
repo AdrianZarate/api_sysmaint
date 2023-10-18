@@ -24,7 +24,7 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * *crea un usuario
+     * *crea un cliente, falta validar para que cree admin y tecnico
      */
     public function store(LoginRequest $request)
     {
