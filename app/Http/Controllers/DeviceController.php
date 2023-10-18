@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Models\ClientDevice;
 use App\Models\Device;
 use Illuminate\Http\Request;
 
@@ -11,7 +12,7 @@ class DeviceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    //!falta probar ❌
+    //* Funciona ✅
     public function index()
     {
         $devices = Device::all();
@@ -25,14 +26,38 @@ class DeviceController extends Controller
      * Store a newly created resource in storage.
      */
     //* ya se crea el dispositivo
+    //* Funciona ✅
     public function store(LoginRequest $request)
     {
-        $device = Device::create($request->all());
+        $device = Device::create([
+            "name" => $request->name,
+            "brand" => $request->brand,
+            "model" => $request->model,
+            "serial_number" => $request->serial_number,
+            "purchase_date" => $request->purchase_date,
+            "location" => $request->location,
+            "physical_state" => $request->physical_state,
+            "status_description" => $request->status_description,
+            "technical_specifications" => $request->technical_specifications,
+            "installation_date" => $request->installation_date,
+            "garantia" => $request->garantia,
+            "accessories" => $request->accessories,
+            "current_value" => $request->current_value,
+            "imagen" => $request->imagen
+        ]);
+
+        
+        $clientDevice = new ClientDevice();
+        $clientDevice->client_id = $request->user_id; 
+        $clientDevice->device_id = $device->id; 
+
+
 
         return response()->json([
             'status' => true,
             'message' => "Dispositivo Creado!",
             'device' => $device,
+            'clientDevice' => $clientDevice
         ], 200);
     }
 
