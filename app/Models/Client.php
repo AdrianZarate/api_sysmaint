@@ -9,6 +9,15 @@ class Client extends Model
 {
     use HasFactory;
 
+    // protected $fillable = [
+    //     'first_name',
+    //     'last_name',
+    //     'email',
+    //     'password',
+    //     'phone',
+    //     'rol_id',
+    // ];
+
     //*trae la info del user que esta relacionado con el cliente
     public function user()
     {

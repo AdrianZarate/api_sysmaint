@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('rol', RolController::class);
 Route::apiResource('user', UserController::class);
+Route::apiResource('client', ClientController::class);
 
 // Route::group(['middleware' => 'auth:sanctum'], function () {
 //     Route::apiResource('products', RolController::class);
