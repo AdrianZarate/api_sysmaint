@@ -29,3 +29,5 @@ Route::apiResource('user', UserController::class);
 // });
 
 // Route::post("login",[RolController::class,'index']);
+
+// php artisan r:l para ver las rutas que tengo

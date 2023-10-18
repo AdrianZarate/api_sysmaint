@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\Rol;
+use Exception;
 use Illuminate\Http\Request;
 
 class RolController extends Controller
@@ -13,17 +14,6 @@ class RolController extends Controller
      */
     public function index()
     {
-
-        // $rol = Rol::where('id', $request->id)->first();
-        // $token = $rol->createToken('my-app-token')->plainTextToken;
-
-
-        // return response()->json([
-        //     'status' => true,
-        //     'roles' => $rol,
-        //     'token' => $token
-        // ]);
-
         $rols = Rol::all();
         return response()->json([
             'status' => true,
@@ -36,7 +26,14 @@ class RolController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $rol = Rol::create($request->all());
+        try {
+            $rol = Rol::create($request->all());
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => "Error, Rol no creado"
+            ], 400);
+        }
 
         return response()->json([
             'status' => true,
@@ -55,5 +52,31 @@ class RolController extends Controller
             'rol' => $rol->find($rol->id)
         ]);
     }
+    
+    //Todo falta implementar
+    public function update(LoginRequest $request, Rol $rol)
+    {
+        return response()->json([
+            'status' => "actualizado",
+            'rol' => $rol->find($rol->id)
+        ], 200);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     */
+    //Todo falta implementar
+    public function destroy(Rol $rol)
+    {
+        //ejemplo
+        $borrar = $rol->find($rol->id);
 
+        $borrar->delete();
+
+        return response()->json([
+            'Borrar' => $borrar,
+            'message' => "Rol eliminado"
+        ], 200);
+
+    }
 }
