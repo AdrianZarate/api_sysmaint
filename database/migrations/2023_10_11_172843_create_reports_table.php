@@ -28,7 +28,7 @@ return new class extends Migration
             $table->unsignedBigInteger('client_device_id')->nullable();
 
             $table->foreign('technician_id')->references('user_id')->on('technicians')->onDelete('set null');
-            $table->foreign('client_device_id')->references('id')->on('client_device')->onDelete('set null');
+            $table->foreign('client_device_id')->references('id')->on('client_devices')->onDelete('set null');
 
             //*----------------------------
             $table->timestamps();

@@ -7,12 +7,15 @@ use App\Models\ClientDevice;
 use App\Models\Device;
 use Illuminate\Http\Request;
 
+//* Funciona ✅
+//!falta probar ❌
 class DeviceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     //* Funciona ✅
+    //! Implementar para que traiga el id del user
     public function index()
     {
         $devices = Device::all();
@@ -25,8 +28,8 @@ class DeviceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    //* ya se crea el dispositivo
     //* Funciona ✅
+    //* Crea el dispositivo
     public function store(LoginRequest $request)
     {
         $device = Device::create([
@@ -50,6 +53,7 @@ class DeviceController extends Controller
         $clientDevice = new ClientDevice();
         $clientDevice->client_id = $request->user_id; 
         $clientDevice->device_id = $device->id; 
+        $clientDevice->save();
 
 
 
