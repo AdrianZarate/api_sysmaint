@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\Client;
+use App\Models\Technician;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-
+//* Funciona ✅
+//!falta probar ❌
 class UserController extends Controller
 {
 
@@ -17,10 +19,10 @@ class UserController extends Controller
     public function login(LoginRequest $request)
     {
         return response()->json([
-                'luffy' => true,
-                // 'request1' => $request,
-                // 'request2' => $request->all(),
-            ]);
+            'luffy' => true,
+            // 'request1' => $request,
+            // 'request2' => $request->all(),
+        ]);
         // $credentials = $request->only('email', 'password');
 
         // if (Auth::attempt($credentials)) {
@@ -70,19 +72,43 @@ class UserController extends Controller
         // ]);
 
         // $user = User::create($request->all());
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'phone' => $request->phone,
-            'rol_id' => 3,
-        ]);
 
+        if ($request->rol == "client") {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => $request->password,
+                'phone' => $request->phone,
+                'rol_id' => 2,
+            ]);
 
-        $client = new Client();
-        $client->user_id = $user->id;
-        $client->save();
+            $client = new Client();
+            $client->user_id = $user->id;
+            $client->save();
+        } else if ($request->rol == "technician") {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => $request->password,
+                'phone' => $request->phone,
+                'rol_id' => 3,
+            ]);
+
+            $technician = new Technician();
+            $technician->user_id = $user->id;
+            $technician->save();
+        } {
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'password' => $request->password,
+                'phone' => $request->phone,
+                'rol_id' => 1,
+            ]);
+        }
 
         // Generar un token de autenticación
         // $token = $user->createToken('Personal Access Token');
@@ -93,6 +119,10 @@ class UserController extends Controller
             'user' => $user,
             // 'token' => $token
         ], 200);
+
+        return response()->json([
+            "res" => $request->rol
+        ]);
     }
 
     /**
