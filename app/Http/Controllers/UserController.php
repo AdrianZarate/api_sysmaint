@@ -73,51 +73,33 @@ class UserController extends Controller
 
         // $user = User::create($request->all());
 
-        //! Para optimizar codigo
-        // $obj = array(
-        //     'first_name' => $request->first_name,
-        //     'last_name' => $request->last_name,
-        //     'email' => $request->email,
-        //     'password' => $request->password,
-        //     'phone' => $request->phone,
-        // );
-
+        $userData = [
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'phone' => $request->phone,
+        ];
+        
         if ($request->rol == "client") {
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'phone' => $request->phone,
-                'rol_id' => 2,
-            ]);
-
+            $userData['rol_id'] = 2;
+            $user = User::create($userData);
+        
             $client = new Client();
             $client->user_id = $user->id;
             $client->save();
-        } else if ($request->rol == "technician") {
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'phone' => $request->phone,
-                'rol_id' => 3,
-            ]);
-
+        } elseif ($request->rol == "technician") {
+            $userData['rol_id'] = 3;
+            $user = User::create($userData);
+        
             $technician = new Technician();
             $technician->user_id = $user->id;
             $technician->save();
         } else {
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'password' => $request->password,
-                'phone' => $request->phone,
-                'rol_id' => 1,
-            ]);
+            $userData['rol_id'] = 1;
+            $user = User::create($userData);
         }
+        
 
         // Generar un token de autenticación
         // $token = $user->createToken('Personal Access Token');
