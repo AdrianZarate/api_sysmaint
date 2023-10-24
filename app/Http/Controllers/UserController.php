@@ -73,6 +73,15 @@ class UserController extends Controller
 
         // $user = User::create($request->all());
 
+        //! Para optimizar codigo
+        // $obj = array(
+        //     'first_name' => $request->first_name,
+        //     'last_name' => $request->last_name,
+        //     'email' => $request->email,
+        //     'password' => $request->password,
+        //     'phone' => $request->phone,
+        // );
+
         if ($request->rol == "client") {
             $user = User::create([
                 'first_name' => $request->first_name,
@@ -99,7 +108,7 @@ class UserController extends Controller
             $technician = new Technician();
             $technician->user_id = $user->id;
             $technician->save();
-        } {
+        } else {
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -120,9 +129,6 @@ class UserController extends Controller
             // 'token' => $token
         ], 200);
 
-        return response()->json([
-            "res" => $request->rol
-        ]);
     }
 
     /**
@@ -163,7 +169,7 @@ class UserController extends Controller
 
         return response()->json([
             'Borrar' => $borrar,
-            'message' => "Rol eliminado"
+            'message' => "User eliminado"
         ], 200);
     }
 }
