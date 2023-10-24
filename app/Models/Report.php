@@ -19,6 +19,8 @@ class Report extends Model
         'service_time',
         'remarks',
         'imagen',
+        'technician_id',
+        'client_device_id'
     ];
 
     //*relacion uno a muchos
@@ -29,6 +31,6 @@ class Report extends Model
 
     public function clientDevice()
     {
-        return $this->belongsTo(ClientDevice::class);
+        return $this->belongsTo(ClientDevice::class, 'client_device_id');
     }
 }

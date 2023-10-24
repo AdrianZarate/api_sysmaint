@@ -47,6 +47,8 @@ class ReportController extends Controller
             'status' => true,
             'message' => "Reporte Creado!",
             'report' => $report,
+            'tecnico' => $request->technician_id,
+            'cliente' => $request->client_device_id,
         ], 200);
     }
 

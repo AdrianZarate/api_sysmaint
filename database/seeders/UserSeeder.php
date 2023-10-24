@@ -39,6 +39,7 @@ class UserSeeder extends Seeder
         $client->user_id = $user2->id;
         $client->save();
 
+        //* tecnico
         $user3 = User::create([
             "first_name" => "Mary",
             "last_name" => "Luz",
