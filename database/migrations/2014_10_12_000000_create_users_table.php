@@ -22,8 +22,8 @@ return new class extends Migration
             //*relacion con la tabla roles de uno a muchos
             $table->unsignedInteger('rol_id'); // para que solo se le pueda asigna un rol al usuario
 
-            $table->timestamp('email_verified_at')->nullable();
-            $table->rememberToken();
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->rememberToken(); //! Esto es para el token
             $table->timestamps();
         });
     }

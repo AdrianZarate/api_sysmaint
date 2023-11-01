@@ -17,10 +17,10 @@ class RolSeeder extends Seeder
             'name' => 'admin',
         ]);
         DB::table('rols')->insert([
-            'name' => 'cliente',
+            'name' => 'client',
         ]);
         DB::table('rols')->insert([
-            'name' => 'tecnico',
+            'name' => 'technician',
         ]);
     }
 }

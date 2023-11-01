@@ -14,48 +14,45 @@ use Illuminate\Support\Facades\Auth;
 //!falta probar ❌
 class UserController extends Controller
 {
-
-    //!completar esto. Puedo crear otro controlador solo para el login
-    public function login(LoginRequest $request)
-    {
-        return response()->json([
-            'luffy' => true,
-            // 'request1' => $request,
-            // 'request2' => $request->all(),
-        ]);
-        // $credentials = $request->only('email', 'password');
-
-        // if (Auth::attempt($credentials)) {
-        //     // Las credenciales son válidas
-        //     $user = Auth::user(); // Obtén el usuario autenticado
-
-        //     // Puedes realizar acciones adicionales aquí, como generar un token de acceso si es necesario.
-
-        //     return response()->json([
-        //         'status' => true,
-        //         'message' => "Inicio de sesión exitoso",
-        //         'user' => $user,
-        //     ], 200);
-        // } else {
-        //     // Las credenciales no son válidas
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => "Credenciales incorrectas",
-        //     ], 401);
-        // }
-    }
-
     /**
      * Display a listing of the resource.
      * *trae todos los usuarios
      */
     public function index()
     {
-        $users = User::all();
-        return response()->json([
-            'status' => true,
-            'users' => $users
-        ]);
+        // $users = User::all();
+        // $users = User::select('id','first_name', 'last_name', 'email', 'phone', 'rol_id')->get();
+        $users = User::with('rol')->select('id', 'first_name', 'last_name', 'email', 'phone', 'rol_id')->get();
+
+
+        if (count($users) > 0) {
+
+            $usersData = [];
+
+            foreach ($users as $user) {
+                $data = [
+                    "id" => $user->id,
+                    "first_name" => $user->first_name,
+                    "last_name" => $user->last_name,
+                    "email" => $user->email,
+                    "phone" => $user->phone,
+                    'rol' => $user->rol->name
+                ];
+                array_push($usersData, $data );
+                    
+            }
+
+            return response()->json([
+                'status' => true,
+                // 'users' => $users,
+                'usersData' => $usersData
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'No hay usuarios registrados'
+            ]);
+        }
     }
 
     /**
@@ -71,7 +68,7 @@ class UserController extends Controller
         //     'request2' => $request->all(),
         // ]);
 
-        // $user = User::create($request->all());
+        //* $user = User::create($request->all());
 
         $userData = [
             'first_name' => $request->first_name,
@@ -80,18 +77,18 @@ class UserController extends Controller
             'password' => $request->password,
             'phone' => $request->phone,
         ];
-        
+
         if ($request->rol == "client") {
             $userData['rol_id'] = 2;
             $user = User::create($userData);
-        
+
             $client = new Client();
             $client->user_id = $user->id;
             $client->save();
         } elseif ($request->rol == "technician") {
             $userData['rol_id'] = 3;
             $user = User::create($userData);
-        
+
             $technician = new Technician();
             $technician->user_id = $user->id;
             $technician->save();
@@ -99,7 +96,7 @@ class UserController extends Controller
             $userData['rol_id'] = 1;
             $user = User::create($userData);
         }
-        
+
 
         // Generar un token de autenticación
         // $token = $user->createToken('Personal Access Token');
@@ -110,7 +107,6 @@ class UserController extends Controller
             'user' => $user,
             // 'token' => $token
         ], 200);
-
     }
 
     /**
@@ -118,9 +114,18 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+
+        $userId = $user->find($user->id);
+
         return response()->json([
             'status' => true,
-            'user' => $user->find($user->id)
+            'user' => [
+                'first_name' => $userId->first_name,
+                'last_name' => $userId->last_name,
+                'email' => $userId->email,
+                'phone' => $userId->phone,
+                'rol' => $userId->rol->name
+            ]
         ]);
     }
 

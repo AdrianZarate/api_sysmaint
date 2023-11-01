@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->date('report_date');
             $table->string('service_type');
-            $table->string('service_description');
+            $table->text('service_description');
             $table->string('equipment_status');
             $table->string('replaced_parts');
-            $table->string('service_cost');
+            $table->float('service_cost');
             $table->string('service_time'); // tiempo de servicio
-            $table->string('remarks');
+            $table->text('remarks');
             $table->string('imagen');
 
             //*Relacion uno a muchos-------

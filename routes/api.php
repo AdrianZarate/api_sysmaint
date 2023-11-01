@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ClientDeviceController;
 use App\Http\Controllers\DeviceController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\TechnicianController;
@@ -34,6 +35,7 @@ Route::apiResource('technician', TechnicianController::class);
 Route::apiResource('device', DeviceController::class);
 Route::apiResource('clientdevice', ClientDeviceController::class);
 Route::apiResource('report', ReportController::class);
+Route::apiResource('login', LoginController::class);
 
 
 // Route::group(['middleware' => 'auth:sanctum'], function () {
