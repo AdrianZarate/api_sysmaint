@@ -10,13 +10,11 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
-//* Funciona ✅
-//!falta probar ❌
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
-     * *trae todos los usuarios
+     ** Funciona
      */
     public function index()
     {
@@ -38,26 +36,25 @@ class UserController extends Controller
                     "phone" => $user->phone,
                     'rol' => $user->rol->name
                 ];
-                array_push($usersData, $data );
-                    
+                array_push($usersData, $data);
             }
 
             return response()->json([
                 'status' => true,
                 // 'users' => $users,
                 'usersData' => $usersData
-            ]);
+            ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'No hay usuarios registrados'
-            ]);
+            ], 400);
         }
     }
 
     /**
      * Store a newly created resource in storage.
-     * *crea un cliente, falta validar para que cree admin y tecnico
+     ** Funciona, falta el token
      */
     public function store(LoginRequest $request)
     {
@@ -111,10 +108,10 @@ class UserController extends Controller
 
     /**
      * Display the specified resource.
+     ** Funciona, trae el user por id
      */
     public function show(User $user)
     {
-
         $userId = $user->find($user->id);
 
         return response()->json([
@@ -125,7 +122,7 @@ class UserController extends Controller
                 'email' => $userId->email,
                 'phone' => $userId->phone,
                 'rol' => $userId->rol->name
-            ]
+            ],
         ]);
     }
 
@@ -133,9 +130,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    //Todo falta implementar
+    
     public function update(Request $request, User $user)
     {
+
+        //! El rol no se actualiza
+        $user->update($request->all());
+
         return response()->json([
             'status' => "actualizado",
             'datos' => $request->all(),
@@ -145,8 +146,8 @@ class UserController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     ** Funciona
      */
-    //Todo falta implementar
     public function destroy(User $user)
     {
         //ejemplo
