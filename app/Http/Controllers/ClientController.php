@@ -15,14 +15,33 @@ class ClientController extends Controller
     {
         //* with es para traer datos relacionados
         $clients = Client::with('user')->get();
-        // Todo otra manera de hacerlo
-        // $user = User::where('rol_id', 2)->get(); 
-        // $clientes = Cliente::with('user')->select('clientes.nombre', 'clientes.apellido', 'users.name')->get();
-        return response()->json([
-            'status' => true,
-            'clients' => $clients,
-            // 'user' => $user
-        ]);
+
+
+        if (count($clients) > 0) {
+            $clientsData = [];
+
+            foreach ($clients as $client) {
+                $data = [
+                    "id" => $client->user->id,
+                    "first_name" => $client->user->first_name,
+                    "last_name" => $client->user->last_name,
+                    "email" => $client->user->email,
+                    "phone" => $client->user->phone,
+                ];
+                array_push($clientsData, $data);
+            }
+            return response()->json([
+                'status' => true,
+                'clients' => $clientsData,
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'message' => 'No hay registro de clientes',
+            ]);
+        }
+
+
     }
 
     /**
@@ -35,7 +54,13 @@ class ClientController extends Controller
         if ($client) {
             return response()->json([
                 'status' => true,
-                'client' => $client,
+                'client' => [
+                    'id' => $client->user->id,
+                    'first_name' => $client->user->first_name,
+                    'last_name' => $client->user->last_name,
+                    'email' => $client->user->email,
+                    'phone' => $client->user->phone
+                ],
             ], 200);
         } else {
             return response()->json([
@@ -52,6 +77,9 @@ class ClientController extends Controller
     //Todo falta implementar al actualizar el client que se actualize el user
     public function update(LoginRequest $request, $user_id)
     {
+
+        
+
         return response()->json([
             'status' => "actualizado",
             'request' => $request->all(),
