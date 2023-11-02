@@ -55,6 +55,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      ** Funciona, falta el token
+     *! Corregir lo del id del rol para que no dependa del id del rol sino del nombre del rol
      */
     public function store(LoginRequest $request)
     {

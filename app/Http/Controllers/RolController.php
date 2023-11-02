@@ -11,10 +11,12 @@ class RolController extends Controller
 {
     /**
      * Display a listing of the resource.
+     ** Funciona
      */
     public function index()
     {
-        $rols = Rol::all();
+        // $rols = Rol::all();
+        $rols = Rol::select('id', 'name')->get();
         return response()->json([
             'status' => true,
             'roles' => $rols
@@ -23,6 +25,7 @@ class RolController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     ** Funciona
      */
     public function store(LoginRequest $request)
     {
@@ -44,28 +47,39 @@ class RolController extends Controller
 
     /**
      * Display the specified resource. Busca por id en la url se la pasa el id api/rol/1
+     ** Funciona
      */
     public function show(Rol $rol)
     {
+        $data = $rol->find($rol->id);
+
         return response()->json([
             'status' => true,
-            'rol' => $rol->find($rol->id)
+            'rol' => [
+                'id' => $data->id,
+                'name' => $data->name
+            ]
         ], 200);
     }
-    
-    //Todo falta implementar
+
+    //* Funciona
     public function update(LoginRequest $request, Rol $rol)
     {
+
+        $rol->update($request->all());
+
         return response()->json([
             'status' => "actualizado",
-            'rol' => $rol->find($rol->id)
+            'rol' => $rol->find($rol->id),
+            'datos' => $request->all()
         ], 200);
     }
-    
+
     /**
      * Remove the specified resource from storage.
+     ** Funciona
      */
-    //Todo falta implementar
+
     public function destroy(Rol $rol)
     {
         //ejemplo
@@ -77,6 +91,5 @@ class RolController extends Controller
             'Borrar' => $borrar,
             'message' => "Rol eliminado"
         ], 200);
-
     }
 }
