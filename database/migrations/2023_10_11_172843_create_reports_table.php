@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('service_cost');
             $table->string('service_time'); // tiempo de servicio
             $table->text('remarks');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
 
             //*Relacion uno a muchos-------
             $table->unsignedBigInteger('technician_id')->nullable();
