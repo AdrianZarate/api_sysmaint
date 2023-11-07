@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('garantia');
             $table->string('accessories');
             $table->float('current_value');
-            $table->string('imagen');
+            $table->string('imagen')->nullable();
             $table->timestamps();
         });
     }
