@@ -83,6 +83,8 @@ class DeviceController extends Controller
     //* Funciona ✅
     public function update(Request $request, Device $device)
     {
+        $device->update($request->all());
+
         return response()->json([
             'status' => "actualizado",
             'datos' => $request->all(),
